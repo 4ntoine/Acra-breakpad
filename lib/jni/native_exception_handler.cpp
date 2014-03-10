@@ -68,7 +68,7 @@ JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExcep
     std::string str_reportsDirectory(c_reportsDirectory);
     env->ReleaseStringUTFChars(j_reportsDirectory, c_reportsDirectory);
 
-    google_breakpad::MinidumpDescriptor descriptor(/*str_reportsDirectory*/".");
+    google_breakpad::MinidumpDescriptor descriptor(str_reportsDirectory);
     google_breakpad::ExceptionHandler eh(descriptor, NULL, breakpad_callback, NULL, true, -1);
 
     debug("init breakpad done");
