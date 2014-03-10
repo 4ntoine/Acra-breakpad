@@ -1,7 +1,7 @@
 Acra-breakpad
 =============
 
-Integration for Acra and google-breakpad.
+Integration for Acra and google-breakpad: catch native crashes using ACRA
 
 How to build:
 1. Go to lib/jni
