@@ -6,11 +6,12 @@ Integration for Acra and google-breakpad: catch native crashes using ACRA
 How to build:
 1. Go to lib/jni
 2. clone (https://code.google.com/p/google-breakpad/source/checkout) or symlink google-breakpad sources to 'lib/jni/breakpad'
-3. ndk-build
-4. Go to app/jni
-5. ndk-build
-6. Go to project root directory
-7. mvn clean install
+3. edit lib/jni/Android.mk to set current local path after breakpad is build (sorry for doing it in a bit hacky way)
+4. ndk-build
+5. Go to app/jni
+6. ndk-build
+7. Go to project root directory
+8. mvn clean install
 
 How to test:
 1. Launch the app
