@@ -1,0 +1,5 @@
+<resources>
+    <string name="BoardTypeDialog.title">Choose board type</string>
+    <string name="BoardTypeDialog.message">Unable to detect Arduino board type automatically. Choose it from the list:</string>
+    <string name="pressReset">Push \'Reset\' hardware button on the board within {0} seconds</string>
+</resources>

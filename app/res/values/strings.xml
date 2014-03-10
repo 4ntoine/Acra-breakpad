@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Acra-breakpad demo</string>
+    <string name="resDialogTitle">Error title</string>
+    <string name="resDialogText">Error text</string>
+</resources>

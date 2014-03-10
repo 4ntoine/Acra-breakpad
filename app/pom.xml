@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>	
+	
+	<groupId>name.antonsmirnov.android</groupId>
+    <artifactId>acra_breakpad_demo</artifactId>
+    <version>1.0</version>
+	<packaging>apk</packaging>
+    <name>acra_breakpad demo app</name>
+	<description>Acra-breakpad integration demo app</description>
+
+    <developers>
+        <developer>
+            <name>Anton Smirnov</name>
+            <email>dev@antonsmirnov.name</email>
+        </developer>
+    </developers>	
+
+    <dependencies>
+        <!-- android -->
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.0.1.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- acra -->
+        <dependency>
+            <groupId>ch.acra</groupId>
+            <artifactId>acra</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
+        <!-- acra - breakpad -->
+        <dependency>
+            <groupId>name.antonsmirnov.android</groupId>
+            <artifactId>acra_breakpad</artifactId>
+            <version>1.0</version>
+            <type>apklib</type>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <plugins>            
+
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>alignApk</id>
+                        <phase>install</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>${project.basedir}/src</source>
+                    <resourceDirectory>${project.basedir}/res</resourceDirectory>
+                    <sdk>
+                        <platform>16</platform>
+                    </sdk>
+                    <attachSources>true</attachSources>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
