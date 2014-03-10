@@ -5,11 +5,12 @@ Integration for Acra and google-breakpad.
 
 How to build:
 1. Go to lib/jni
-2. ndk-build
-3. Go to app/jni
-4. ndk-build
-5. Go to project root directory
-6. mvn clean install
+2. clone (https://code.google.com/p/google-breakpad/source/checkout) or symlink google-breakpad sources to 'lib/jni/breakpad'
+3. ndk-build
+4. Go to app/jni
+5. ndk-build
+6. Go to project root directory
+7. mvn clean install
 
 How to test:
 1. Launch the app
