@@ -95,14 +95,17 @@ void bind(JNIEnv *env)
 
 void unbind(JNIEnv *env)
 {
-  if (ExceptionHandlerClass != NULL)
+  if (ExceptionHandlerClass != NULL) {
     env->DeleteGlobalRef(ExceptionHandlerClass);
+    ExceptionHandlerClass = NULL;
+  }
 
-  ExceptionConstructor = NULL;
   ExceptionHandlerMethod = NULL;
 
-  if (ExceptionClass != NULL)
+  if (ExceptionClass != NULL) {
     env->DeleteGlobalRef(ExceptionClass);
+    ExceptionClass = NULL;
+  }
 
   ExceptionConstructor = NULL;
 }
