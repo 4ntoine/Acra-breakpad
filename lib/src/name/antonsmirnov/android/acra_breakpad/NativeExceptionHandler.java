@@ -11,6 +11,7 @@ import java.io.File;
 public class NativeExceptionHandler {
 
     static {
+        System.loadLibrary("gnustl_shared");
         System.loadLibrary("native_exception_handler");
     }
 
