@@ -37,4 +37,12 @@ public class MainActivity extends Activity {
         // crash
         int result = lib.native_func("temp1", null, new Integer(5));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // release
+        App.get().getExceptionHandler().deinit();
+    }
 }

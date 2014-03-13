@@ -40,15 +40,11 @@ bool breakpad_callback(const google_breakpad::MinidumpDescriptor& descriptor, vo
   debug("attaching thread ...");
   vm->AttachCurrentThread(&env, NULL);
 
-  debug("handle exception");
-
-  // create exception object
+  // create exception
   jstring j_path = env->NewStringUTF(c_path);
   jobject j_exception = env->NewObject(ExceptionClass, ExceptionConstructor, j_path);
-  env->ReleaseStringUTFChars(j_path, c_path);
-  env->DeleteLocalRef(j_path);
 
-  // handle exception
+  // throw exception
   env->CallStaticVoidMethod(ExceptionHandlerClass, ExceptionHandlerMethod, j_exception);
   env->DeleteLocalRef(j_exception);
 
@@ -56,6 +52,10 @@ bool breakpad_callback(const google_breakpad::MinidumpDescriptor& descriptor, vo
 
   return succeeded;
 }
+
+// have to be create in heap
+static google_breakpad::MinidumpDescriptor *descriptor = NULL;
+static google_breakpad::ExceptionHandler *eh = NULL;
 
 JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeSetReportsDirectory
   (JNIEnv *env, jobject self, jstring j_reportsDirectory)
@@ -68,11 +68,33 @@ JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExcep
     std::string str_reportsDirectory(c_reportsDirectory);
     env->ReleaseStringUTFChars(j_reportsDirectory, c_reportsDirectory);
 
-    google_breakpad::MinidumpDescriptor descriptor(str_reportsDirectory);
-    google_breakpad::ExceptionHandler eh(descriptor, NULL, breakpad_callback, NULL, true, -1);
+    // release if already init
+    Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(env, self);
+
+    descriptor = new google_breakpad::MinidumpDescriptor(str_reportsDirectory);
+    eh = new google_breakpad::ExceptionHandler(*descriptor, NULL, breakpad_callback, NULL, true, -1);
 
     debug("init breakpad done");
 }
+
+/*
+ * Class:     name_antonsmirnov_android_acra_breakpad_NativeExceptionHandler
+ * Method:    nativeRelease
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(JNIEnv *env, jobject self)
+{
+    if (descriptor != NULL) {
+        delete descriptor;
+        descriptor = NULL;
+    }
+
+    if (eh != NULL) {
+        delete eh;
+        eh = NULL;
+    }
+}
+
 
 void bind(JNIEnv *env)
 {
@@ -141,5 +163,6 @@ void JNI_OnUnload(JavaVM *aVm, void *reserved)
     }
 
     unbind(env);
+    Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(env, NULL);
     vm = NULL;
 }

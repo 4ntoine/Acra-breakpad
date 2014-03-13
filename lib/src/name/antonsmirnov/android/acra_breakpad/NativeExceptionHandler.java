@@ -42,4 +42,13 @@ public class NativeExceptionHandler {
         setReportsDirectory(new File(app.getCacheDir(), "reports"));
         return true;
     }
+
+    private native void nativeRelease();
+
+    /**
+     * Have to be invoked before app quit
+     */
+    public void deinit() {
+        nativeRelease();
+    }
 }

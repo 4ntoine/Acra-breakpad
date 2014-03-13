@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeSetReportsDirectory
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     name_antonsmirnov_android_acra_breakpad_NativeExceptionHandler
+ * Method:    nativeRelease
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif
