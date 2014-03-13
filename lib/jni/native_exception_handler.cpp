@@ -57,6 +57,19 @@ bool breakpad_callback(const google_breakpad::MinidumpDescriptor& descriptor, vo
 static google_breakpad::MinidumpDescriptor *descriptor = NULL;
 static google_breakpad::ExceptionHandler *eh = NULL;
 
+void release()
+{
+    if (descriptor != NULL) {
+        delete descriptor;
+        descriptor = NULL;
+    }
+
+    if (eh != NULL) {
+        delete eh;
+        eh = NULL;
+    }
+}
+
 JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeSetReportsDirectory
   (JNIEnv *env, jobject self, jstring j_reportsDirectory)
 {
@@ -69,7 +82,7 @@ JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExcep
     env->ReleaseStringUTFChars(j_reportsDirectory, c_reportsDirectory);
 
     // release if already init
-    Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(env, self);
+    release();
 
     descriptor = new google_breakpad::MinidumpDescriptor(str_reportsDirectory);
     eh = new google_breakpad::ExceptionHandler(*descriptor, NULL, breakpad_callback, NULL, true, -1);
@@ -84,15 +97,7 @@ JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExcep
  */
 JNIEXPORT void JNICALL Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(JNIEnv *env, jobject self)
 {
-    if (descriptor != NULL) {
-        delete descriptor;
-        descriptor = NULL;
-    }
-
-    if (eh != NULL) {
-        delete eh;
-        eh = NULL;
-    }
+    release();
 }
 
 
@@ -163,6 +168,6 @@ void JNI_OnUnload(JavaVM *aVm, void *reserved)
     }
 
     unbind(env);
-    Java_name_antonsmirnov_android_acra_1breakpad_NativeExceptionHandler_nativeRelease(env, NULL);
+    release();
     vm = NULL;
 }
