@@ -4,6 +4,7 @@ Acra-breakpad
 Integration for Acra and google-breakpad: catch native crashes using ACRA
 
 How to build:
+0. clone forked ACRA with binary attachments support (https://github.com/4ntoine/acra) and build the project (mvn clean install)
 1. Go to lib/jni
 2. clone (https://code.google.com/p/google-breakpad/source/checkout) or symlink google-breakpad sources to 'lib/jni/breakpad'
 3. edit lib/jni/Android.mk to set current local path after breakpad is build (sorry for doing it in a bit hacky way)
