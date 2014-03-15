@@ -28,11 +28,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- acra -->
+        <!-- acra (make sure you're using 4ntoine-acra or pull request merged to acra) -->
         <dependency>
             <groupId>ch.acra</groupId>
             <artifactId>acra</artifactId>
-            <version>4.5.0</version>
+            <version>5.0.0-SNAPSHOT</version>
         </dependency>
 
         <!-- acra - breakpad -->

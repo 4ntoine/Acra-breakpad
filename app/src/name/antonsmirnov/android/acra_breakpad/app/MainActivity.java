@@ -4,14 +4,21 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import name.antonsmirnov.android.acra_breakpad.NativeExceptionHandler;
 
 public class MainActivity extends Activity {
+
+    private NativeExceptionHandler exceptionHandler = new NativeExceptionHandler();
 
     private Button testCatchButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // allocate and start handle native exceptions
+        exceptionHandler.init(null);
+
         setContentView(R.layout.main);
 
         bindControls();
@@ -42,7 +49,7 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // release
-        App.get().getExceptionHandler().deinit();
+        // release and stop handle native exceptions
+        exceptionHandler.deinit();
     }
 }

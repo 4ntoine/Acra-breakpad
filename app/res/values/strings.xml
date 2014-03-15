@@ -3,4 +3,5 @@
     <string name="app_name">Acra-breakpad demo</string>
     <string name="resDialogTitle">Error title</string>
     <string name="resDialogText">Error text</string>
+    <string name="resDialogComment">Please describe how to reproduce the crash</string>
 </resources>

@@ -24,4 +24,7 @@
             android:finishOnTaskLaunch="true"
             android:process=":crashReportProcess"/>
     </application>
+
+    <!-- to allow to write report file to public available storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

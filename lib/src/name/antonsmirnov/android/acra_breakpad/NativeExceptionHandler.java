@@ -1,6 +1,8 @@
 package name.antonsmirnov.android.acra_breakpad;
 
 import android.app.Application;
+import android.os.Environment;
+import android.os.SystemClock;
 import org.acra.ACRA;
 
 import java.io.File;
@@ -32,15 +34,19 @@ public class NativeExceptionHandler {
      * If invoked from native code on crash
      */
     public static void handleException(NativeException e) {
-        ACRA.getErrorReporter().putCustomData("minidump", e.getReport());
+        // pass as binary file attachment
+        ACRA.getConfig().setCrashDumpFile(e.getReportPath());
+
         ACRA.getErrorReporter().handleException(e);
+        SystemClock.sleep(1000); // to let ACRA show dialog (otherwise ACRA dialog will not be shown)
     }
 
     /**
      * To be initialized once in Application.onCreate()
      */
     public boolean init(Application app) {
-        setReportsDirectory(new File(app.getCacheDir(), "reports"));
+        // make sure report file is stored in public available storage to make it available for email app
+        setReportsDirectory(Environment.getExternalStorageDirectory());
         return true;
     }
 
